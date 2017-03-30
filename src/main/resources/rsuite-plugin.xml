@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rsuite-plugin id="@pluginId@" version="@pluginVersion@" timestamp="@timeStamp@">
+    
+    <!-- @pluginId@ = team-edition-tags-->
+
+    <extensionProvider id="rsuite.WebService">
+		<staticWebService path="/WebContent" root="/@pluginId@"/>
+    </extensionProvider>
+
+    <extensionProvider id="rsuite.UI">
+        <contentDisplayAdvisor id="@pluginId@:contentDisplayAdvisor" type="com.rsicms.teamEdition.tags.advisors.TEContentAdvisor" />
+    </extensionProvider>
+
+</rsuite-plugin>
