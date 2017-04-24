@@ -13,10 +13,10 @@ dependencies {
 		transitive=false
 	}
 
-	compile 'apache:commons-lang:2.4'
-	compile 'apache:commons-io:1.4'
-	compile 'apache:commons-logging:1.1'
-	compile 'apache:commons-fileupload:1.2.1'
+	compile 'commons-lang:commons-lang:2.4'
+	compile 'commons-io:commons-io:1.4'
+	compile 'commons-logging:commons-logging:1.1'
+	compile 'commons-fileupload:commons-fileupload:1.2.1'
 	compile 'org.json:org.json:2.0'	
 	
 	testCompile 'junit:junit:4.4'
