@@ -1,13 +1,10 @@
 package com.rsicms.teamEdition.tags.advisors;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.reallysi.rsuite.api.ManagedObject;
-import com.reallysi.rsuite.api.MetaDataItem;
 import com.reallysi.rsuite.api.ObjectType;
 import com.reallysi.rsuite.api.RSuiteException;
 import com.reallysi.rsuite.api.User;
@@ -33,12 +30,16 @@ public class TEContentAdvisor implements ContentDisplayAdvisor {
         }
 
         List<String> tags = TagsUtils.tagList(context, user, mo);
-        
-        String label = mo.getDisplayName();
-        if (tags.size() > 0) {
-            label = label + " <span class=\"rsuiteTagLabel\" style=\"padding-left:10px; color:green\">" + StringUtils.join(tags, ", ") + "</span>";
+
+        if (TagsUtils.tagInColumn(context)) {
+        	item.addCustomValue("tags", StringUtils.join(tags, ", "));
+        } else {
+	        String label = mo.getDisplayName();
+	        if (tags.size() > 0) {
+	            label = label + " <span class=\"rsuiteTagLabel\" style=\"padding-left:10px; color:green\">" + StringUtils.join(tags, ", ") + "</span>";
+	        }
+	        item.setLabel(label);
         }
-        item.setLabel(label);
     }
 
     @Override

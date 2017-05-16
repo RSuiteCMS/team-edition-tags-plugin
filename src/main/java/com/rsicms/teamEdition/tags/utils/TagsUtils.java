@@ -51,6 +51,15 @@ public class TagsUtils {
 		return tagLMD;
 	}
 
+	/**
+	 * @param context
+	 * @return
+	 */
+	public static Boolean tagInColumn(ExecutionContext context) {
+		Boolean tagInColumn = Boolean.parseBoolean(context.getConfigurationProperties().getProperty("rsuite.lmd.tag.column", "false"));
+		return tagInColumn;
+	}
+
     /**
      * @param context
      * @param lmdName
