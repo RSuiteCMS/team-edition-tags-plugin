@@ -51,6 +51,9 @@
 				<component>
 					<lmdName>RSuiteTag</lmdName>
 				</component>
+				<component>
+					<lmdName>tag</lmdName>
+				</component>
 			</componentList>
 		</searchFieldDefinition>
 
