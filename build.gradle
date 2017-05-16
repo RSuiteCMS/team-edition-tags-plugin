@@ -9,7 +9,7 @@ group = 'rsi'
 
 dependencies {
 	/* RSI and RSuite common code */
-	compile('rsi:rsuite-api:4.0.10') {
+	compile('rsi:rsuite-api:5.1.0') {
 		transitive=false
 	}
 
