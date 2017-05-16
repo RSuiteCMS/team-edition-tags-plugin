@@ -1,11 +1,10 @@
 package com.rsicms.teamEdition.tags.advisors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.reallysi.rsuite.api.ManagedObject;
 import com.reallysi.rsuite.api.MetaDataItem;
@@ -15,13 +14,12 @@ import com.reallysi.rsuite.api.User;
 import com.reallysi.rsuite.api.content.ContentAdvisorContext;
 import com.reallysi.rsuite.api.content.ContentDisplayAdvisor;
 import com.reallysi.rsuite.api.content.ContentDisplayObject;
+import com.rsicms.teamEdition.tags.utils.TagsUtils;
 
 public class TEContentAdvisor implements ContentDisplayAdvisor {
 
     @Override
     public void adjustContentItem(ContentAdvisorContext context, ContentDisplayObject item) throws RSuiteException {
-        Log log = LogFactory.getLog(TEContentAdvisor.class);
-
         User user = context.getUser();
         if (user == null) {
             user = context.getAuthorizationService().getSystemUser();
@@ -34,17 +32,11 @@ public class TEContentAdvisor implements ContentDisplayAdvisor {
             objType = mo.getObjectType();
         }
 
-        List<MetaDataItem> mdItems = mo.getMetaDataItems();
-        List<String> tags = new ArrayList<String>();
-        for (MetaDataItem mdItem : mdItems) {
-            if (mdItem.getName().equals("Tag")) {
-                tags.add(mdItem.getValue());
-            }
-        }
-
+        List<String> tags = TagsUtils.tagList(context, user, mo);
+        
         String label = mo.getDisplayName();
         if (tags.size() > 0) {
-            label = label + " <span style=\"padding-left:10px; color:green\">" + StringUtils.join(tags, ", ") + "</span>";
+            label = label + " <span class=\"rsuiteTagLabel\" style=\"padding-left:10px; color:green\">" + StringUtils.join(tags, ", ") + "</span>";
         }
         item.setLabel(label);
     }

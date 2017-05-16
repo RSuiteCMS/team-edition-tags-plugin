@@ -1,0 +1,20 @@
+<messages group="tags">
+	<messages group="menu">
+		<message name="path">Metadata</message>
+		<message name="action">Set tags</message>
+	</messages>
+	<messages group="form">
+		<message name="formLabel">Tags</message>
+		<message name="fieldLabel">Tags</message>
+	</messages>
+	<messages group="notification">
+		<message name="noticeTitle">Tags Updated</message>
+		<message name="noticeText">Tags set.</message>
+	</messages>
+	<messages group="search">
+		<message name="label">Tag Search</message>
+		<message name="description">Search for content using the tags</message>
+		<message name="instructions"></message>
+		<message name="fieldLabel">Tags</message>
+	</messages>
+</messages>

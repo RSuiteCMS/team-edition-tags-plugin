@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rsuite-plugin id="@pluginId@" version="@pluginVersion@" timestamp="@timeStamp@">
-    
-    <!-- @pluginId@ = team-edition-tags-->
+<rsuite-plugin id="@pluginId@" version="@pluginVersion@" timestamp="@timeStamp@"
+	description="Defines RSuiteTags LMD field; enables users to assign values; search against them; view them via content advisor.">
 
-    <extensionProvider id="rsuite.WebService">
+	<!-- @pluginId@ = team-edition-tags-plugin -->
+
+	<extensionProvider id="rsuite.WebService">
 		<staticWebService path="/WebContent" root="/@pluginId@"/>
-    </extensionProvider>
+		<remoteApiDefinition handler="com.rsicms.teamEdition.tags.services.SetTags" id="rsuiteTags.setTags"/>
+	</extensionProvider>
 
-    <extensionProvider id="rsuite.UI">
-        <contentDisplayAdvisor id="@pluginId@:contentDisplayAdvisor" type="com.rsicms.teamEdition.tags.advisors.TEContentAdvisor" />
-    </extensionProvider>
+	<extensionProvider id="rsuite.UI">
+		<messageTable src="/@pluginId@/static/tags.xml"/>
+		<messageTable src="/rsuite-cms-search-config/static/search.xml"/>
+		<contentDisplayAdvisor id="@pluginId@:contentDisplayAdvisor" type="com.rsicms.teamEdition.tags.advisors.TEContentAdvisor"/>
+	</extensionProvider>
+
+	<extensionProvider id="rsuite.ContextMenu">
+		<contextMenuRuleSet name="menu.tags.items">
+			<menuItemList>
+				<menuItem id="tags">
+					<actionName>rsuite:invokeWebservice</actionName>
+					<property name="rsuite:labelMessage" value="tags/menu/action"/>
+					<property name="rsuite:pathMessage" value="tags/menu/path"/>
+					<property name="remoteApiName" value="rsuiteTags.setTags"/>
+					<property name="formId" value="form.setTags"/>
+				</menuItem>
+			</menuItemList>
+			<ruleList>
+				<rule>exclude role Contributor</rule>
+			</ruleList>
+		</contextMenuRuleSet>
+	</extensionProvider>
+
+	<extensionProvider id="rsuite.Forms">
+		<formDefinition id="form.setTags" label="tags/form/formLabel" handler="com.rsicms.teamEdition.tags.formhandlers.TagsFormHandler">
+			<property name="dialogOptions.width" value="400px"/>
+			<column name="col1">
+				<param>
+					<name>tags</name>
+					<label>tags/form/fieldLabel</label>
+					<allowMultiple>true</allowMultiple>
+				</param>
+			</column>
+		</formDefinition>
+	</extensionProvider>
+
+	<extensionProvider id="rsuite.Search">
+		<searchFieldDefinition name="tagsMd" type="lmd-name-value">
+			<componentList>
+				<component>
+					<lmdName>RSuiteTag</lmdName>
+				</component>
+			</componentList>
+		</searchFieldDefinition>
+
+		<facetConfiguration>
+			<facetFormConfig id="tagSearch" description="/tags/search/description" instructions="/tags/search/instructions" roles="" label="/tags/search/label">
+				<property name="rsuite:icon" value="search_filtered"/>
+				<facet name="tagsMd" label="/tags/search/fieldLabel"/>
+				<facet name="rsuite:docMedia" label="/search/faceted/basicFacet/field/docMedia" />
+				<facet name="rsuite:xmlDoc" label="/search/faceted/basicFacet/field/xmlDoc"/>
+				<facet name="rsuite:containers" label="/search/faceted/basicFacet/field/containers"/>
+				<facet name="rsuite:createDate" label="/search/faceted/basicFacet/field/createDate"/>
+				<facet name="rsuite:modifiedDate" label="/search/faceted/basicFacet/field/modifiedDate"/>
+				<facet name="user" label="/search/faceted/basicFacet/field/userId" omitValues="true"/>
+				<facet name="id" label="/search/faceted/basicFacet/field/rsuiteId" omitValues="true"/>
+				<facet name="checkedoutuser" label="Checked out by"/>
+			</facetFormConfig>
+		</facetConfiguration>
+
+	</extensionProvider>
 
 </rsuite-plugin>
