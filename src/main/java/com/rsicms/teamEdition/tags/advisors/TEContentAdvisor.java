@@ -21,12 +21,17 @@ public class TEContentAdvisor implements ContentDisplayAdvisor {
         if (user == null) {
             user = context.getAuthorizationService().getSystemUser();
         }
-
-        ManagedObject mo = item.getManagedObject();
-        ObjectType objType = mo.getObjectType();
-        if (objType == ObjectType.MANAGED_OBJECT_REF || objType == ObjectType.CONTENT_ASSEMBLY_REF) {
-            mo = context.getManagedObjectService().getManagedObject(user, mo.getTargetId());
-            objType = mo.getObjectType();
+        ManagedObject mo = null;
+    	try {
+    		mo = item.getManagedObject();
+            ObjectType objType = mo.getObjectType();
+            if (objType == ObjectType.MANAGED_OBJECT_REF || objType == ObjectType.CONTENT_ASSEMBLY_REF) {
+	            mo = context.getManagedObjectService().getManagedObject(user, mo.getTargetId());
+	            objType = mo.getObjectType(); 
+            }
+        } catch (Exception e) {
+        	//Likely caching issue; mo doesn't exist.
+        	return;
         }
 
         List<String> tags = TagsUtils.tagList(context, user, mo);
